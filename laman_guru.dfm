@@ -32,6 +32,7 @@ object FGuru: TFGuru
     Top = 107
     Width = 625
     Height = 250
+    DataSource = FDM.guru_ds
     Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET

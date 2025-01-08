@@ -14,6 +14,8 @@ type
     logout_btn: TBitBtn;
     jadwalS_smdbnv: TSMDBNavigator;
     procedure logout_btnClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,6 +34,16 @@ uses datamodule;
 procedure TFSiswa.logout_btnClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TFSiswa.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FDM.ActiveTable(False);
+end;
+
+procedure TFSiswa.FormShow(Sender: TObject);
+begin
+  FDM.ActiveTable(True);
 end;
 
 end.

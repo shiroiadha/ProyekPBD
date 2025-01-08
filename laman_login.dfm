@@ -12,6 +12,8 @@ object FLogin: TFLogin
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnClose = FormClose
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object user_lbl: TLabel
@@ -65,6 +67,7 @@ object FLogin: TFLogin
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    Text = 'admin1'
   end
   object passwd_edt: TEdit
     Left = 191
@@ -79,6 +82,7 @@ object FLogin: TFLogin
     ParentFont = False
     PasswordChar = '*'
     TabOrder = 1
+    Text = 'adminpass'
   end
   object login_btn: TBitBtn
     Left = 80
@@ -112,17 +116,18 @@ object FLogin: TFLogin
   end
   object con1: TZConnection
     ControlsCodePage = cGET_ACP
-    AutoEncodeStrings = True
     Properties.Strings = (
       'RawStringEncoding=DB_CP'
       'AutoEncodeStrings=True'
       'controls_cp=GET_ACP')
+    Connected = True
+    DisableSavepoints = False
     HostName = 'localhost'
     Port = 3306
     Database = 'jadwalngajar'
     User = 'root'
     Protocol = 'mysql'
-    LibraryLocation = 'D:\ProyekPt2\tubes\libmysql.dll'
+    LibraryLocation = 'D:\DATA FOLDER\Delphi Project\ProyekPt2\tubes\libmysql.dll'
     Left = 200
     Top = 8
   end
