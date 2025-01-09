@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               8.0.30 - MySQL Community Server - GPL
+-- Server version:               10.4.32-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
--- HeidiSQL Version:             12.1.0.6537
+-- HeidiSQL Version:             12.8.0.6908
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -16,15 +16,15 @@
 
 
 -- Dumping database structure for jadwalngajar
-CREATE DATABASE IF NOT EXISTS `jadwalngajar` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `jadwalngajar` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 USE `jadwalngajar`;
 
 -- Dumping structure for table jadwalngajar.akun
 CREATE TABLE IF NOT EXISTS `akun` (
-  `id_akun` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `role` enum('siswa','guru','admin') COLLATE utf8mb4_general_ci NOT NULL,
+  `id_akun` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('siswa','guru','admin') NOT NULL,
   PRIMARY KEY (`id_akun`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -42,10 +42,10 @@ INSERT INTO `akun` (`id_akun`, `username`, `password`, `role`) VALUES
 
 -- Dumping structure for table jadwalngajar.guru
 CREATE TABLE IF NOT EXISTS `guru` (
-  `id_guru` int NOT NULL AUTO_INCREMENT,
-  `nama` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `nip` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `telepon` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_guru` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) NOT NULL,
+  `nip` varchar(20) NOT NULL,
+  `telepon` varchar(15) NOT NULL,
   PRIMARY KEY (`id_guru`),
   UNIQUE KEY `nip` (`nip`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -64,20 +64,30 @@ INSERT INTO `guru` (`id_guru`, `nama`, `nip`, `telepon`) VALUES
 	(9, 'Merry', '1980009', '089123458675'),
 	(10, 'Renko', '1980010', '081223458967'),
 	(11, 'Keiki', '1980011', '081324563971'),
-	(15, 'Usumi', '1980012', '901284390184');
+	(12, 'Usumi', '1980012', '901284390184');
 
 -- Dumping structure for table jadwalngajar.jadwal
 CREATE TABLE IF NOT EXISTS `jadwal` (
-  `id_jadwal` int NOT NULL AUTO_INCREMENT,
-  `hari` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_jadwal` int(11) NOT NULL AUTO_INCREMENT,
+  `hari` varchar(50) NOT NULL,
   `jam_mulai` time NOT NULL,
   `jam_selesai` time NOT NULL,
-  `id_kelas` int NOT NULL,
-  `id_mapel` int NOT NULL,
-  `id_guru` int NOT NULL,
-  `id_ruang` int NOT NULL,
-  `id_tahun` int NOT NULL,
-  PRIMARY KEY (`id_jadwal`)
+  `id_kelas` int(11) NOT NULL,
+  `id_mapel` int(11) NOT NULL,
+  `id_guru` int(11) NOT NULL,
+  `id_ruang` int(11) NOT NULL,
+  `id_tahun` int(11) NOT NULL,
+  PRIMARY KEY (`id_jadwal`),
+  KEY `id_kelas` (`id_kelas`),
+  KEY `id_mapel` (`id_mapel`),
+  KEY `id_guru` (`id_guru`),
+  KEY `id_ruang` (`id_ruang`),
+  KEY `id_tahun` (`id_tahun`),
+  CONSTRAINT `FK_jadwal_guru` FOREIGN KEY (`id_guru`) REFERENCES `guru` (`id_guru`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_jadwal_kelas` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_jadwal_matapelajaran` FOREIGN KEY (`id_mapel`) REFERENCES `matapelajaran` (`id_mapel`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_jadwal_ruangkelas` FOREIGN KEY (`id_ruang`) REFERENCES `ruangkelas` (`id_ruang`) ON UPDATE CASCADE,
+  CONSTRAINT `FK_jadwal_tahunajaran` FOREIGN KEY (`id_tahun`) REFERENCES `tahunajaran` (`id_tahun`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table jadwalngajar.jadwal: ~8 rows (approximately)
@@ -94,35 +104,36 @@ INSERT INTO `jadwal` (`id_jadwal`, `hari`, `jam_mulai`, `jam_selesai`, `id_kelas
 
 -- Dumping structure for table jadwalngajar.kelas
 CREATE TABLE IF NOT EXISTS `kelas` (
-  `id_kelas` int NOT NULL AUTO_INCREMENT,
-  `nama_kelas` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_guru` int NOT NULL,
+  `id_kelas` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_kelas` varchar(50) NOT NULL,
+  `id_guru` int(11) NOT NULL,
   PRIMARY KEY (`id_kelas`),
+  UNIQUE KEY `nama_kelas` (`nama_kelas`),
   KEY `id_guru` (`id_guru`),
-  CONSTRAINT `FK_kelas_guru` FOREIGN KEY (`id_guru`) REFERENCES `guru` (`id_guru`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CONSTRAINT `FK_kelas_guru` FOREIGN KEY (`id_guru`) REFERENCES `guru` (`id_guru`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table jadwalngajar.kelas: ~12 rows (approximately)
+-- Dumping data for table jadwalngajar.kelas: ~13 rows (approximately)
 DELETE FROM `kelas`;
 INSERT INTO `kelas` (`id_kelas`, `nama_kelas`, `id_guru`) VALUES
-	(1, '10A', 1),
+	(1, '10A', 5),
 	(2, '10B', 2),
 	(3, '11A', 3),
-	(4, '11B', 4),
+	(4, '11B', 10),
 	(5, '12A', 5),
 	(6, '12B', 6),
 	(7, '10C', 7),
 	(8, '11C', 8),
 	(10, '10D', 3),
 	(11, '10E', 4),
-	(13, '12R', 11),
-	(15, '12TE', 7);
+	(12, '12R', 11),
+	(13, '12E', 1);
 
 -- Dumping structure for table jadwalngajar.matapelajaran
 CREATE TABLE IF NOT EXISTS `matapelajaran` (
-  `id_mapel` int NOT NULL AUTO_INCREMENT,
-  `nama_mapel` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `kode_mapel` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_mapel` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_mapel` varchar(100) NOT NULL,
+  `kode_mapel` varchar(20) NOT NULL,
   PRIMARY KEY (`id_mapel`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -140,9 +151,9 @@ INSERT INTO `matapelajaran` (`id_mapel`, `nama_mapel`, `kode_mapel`) VALUES
 
 -- Dumping structure for table jadwalngajar.ruangkelas
 CREATE TABLE IF NOT EXISTS `ruangkelas` (
-  `id_ruang` int NOT NULL AUTO_INCREMENT,
-  `nama_ruang` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `kapasitas` int NOT NULL,
+  `id_ruang` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_ruang` varchar(50) NOT NULL,
+  `kapasitas` int(11) NOT NULL,
   PRIMARY KEY (`id_ruang`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -160,11 +171,11 @@ INSERT INTO `ruangkelas` (`id_ruang`, `nama_ruang`, `kapasitas`) VALUES
 
 -- Dumping structure for table jadwalngajar.siswa
 CREATE TABLE IF NOT EXISTS `siswa` (
-  `id_siswa` int NOT NULL AUTO_INCREMENT,
-  `nama` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `nis` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `telepon` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
-  `id_kelas` int DEFAULT NULL,
+  `id_siswa` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(100) NOT NULL,
+  `nis` varchar(20) NOT NULL,
+  `telepon` varchar(15) NOT NULL,
+  `id_kelas` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_siswa`),
   UNIQUE KEY `nis` (`nis`),
   KEY `kelas_id` (`id_kelas`) USING BTREE,
@@ -174,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `siswa` (
 -- Dumping data for table jadwalngajar.siswa: ~9 rows (approximately)
 DELETE FROM `siswa`;
 INSERT INTO `siswa` (`id_siswa`, `nama`, `nis`, `telepon`, `id_kelas`) VALUES
-	(2, 'Eko', '1002', '081234567890', 1),
+	(2, 'Eko', '1002', '081234567891', 1),
 	(3, 'Fina', '1003', '081234567890', 2),
 	(4, 'Gilang', '1004', '081234567890', 2),
 	(5, 'Hana', '1005', '081234567890', 1),
@@ -182,14 +193,14 @@ INSERT INTO `siswa` (`id_siswa`, `nama`, `nis`, `telepon`, `id_kelas`) VALUES
 	(7, 'Joko', '1007', '081234567890', 2),
 	(8, 'Kiki', '1008', '081234567890', 2),
 	(9, 'Mara', '1009', '081322440099', 1),
-	(12, 'Merry', '1010', '081238973456', NULL);
+	(10, 'Merry Harn', '1010', '081238973456', NULL);
 
 -- Dumping structure for table jadwalngajar.tahunajaran
 CREATE TABLE IF NOT EXISTS `tahunajaran` (
-  `id_tahun` int NOT NULL AUTO_INCREMENT,
-  `tahun_mulai` int NOT NULL,
-  `tahun_selesai` int NOT NULL,
-  `status_aktif` enum('Aktif','Tidak Aktif') COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_tahun` int(11) NOT NULL AUTO_INCREMENT,
+  `tahun_mulai` int(11) NOT NULL,
+  `tahun_selesai` int(11) NOT NULL,
+  `status_aktif` enum('Aktif','Tidak Aktif') DEFAULT NULL,
   PRIMARY KEY (`id_tahun`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
