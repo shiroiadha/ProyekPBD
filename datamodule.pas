@@ -23,6 +23,9 @@ type
     stfld_zqusername: TStringField;
     stfld_zqpassword: TStringField;
     stfld_zqrole: TStringField;
+    intgrfld_zqid_kelas: TIntegerField;
+    strngfld_zqnama_kelas: TStringField;
+    intgrfld_zqid_guru: TIntegerField;
   private
     { Private declarations }
   public

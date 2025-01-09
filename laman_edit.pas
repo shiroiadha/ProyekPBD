@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, DB, ZAbstractRODataset, ZAbstractDataset,
-  ZDataset;
+  ZDataset, SMDBComb, ADODB;
 
 type
   TFEdit = class(TForm)
@@ -17,7 +17,7 @@ type
     role_lbl: TLabel;
     add_btn: TBitBtn;
     cancel_btn: TBitBtn;
-    crud_SG_lbl: TLabel;
+    crud_JDWL_lbl: TLabel;
     update_btn: TBitBtn;
     delete_btn: TBitBtn;
     tlpn_lbl: TLabel;
@@ -27,6 +27,23 @@ type
     crud_KLS_lbl: TLabel;
     kls_edt: TEdit;
     wali_edt: TEdit;
+    hari_lbl: TLabel;
+    mulai_lbl: TLabel;
+    selesai_lbl: TLabel;
+    id_kls_lbl: TLabel;
+    hari_edt: TEdit;
+    mulai_edt: TEdit;
+    selesai_edt: TEdit;
+    id_mapel_lbl: TLabel;
+    id_guru_lbl: TLabel;
+    id_ruang_lbl: TLabel;
+    id_tahun_lbl: TLabel;
+    int_mapel_edt: TEdit;
+    int_tahun_edt: TEdit;
+    int_ruang_edt: TEdit;
+    crud_SG_lbl: TLabel;
+    int_guru_edt: TEdit;
+    int_kls_edt: TEdit;
     procedure cancel_btnClick(Sender: TObject);
     procedure add_btnClick(Sender: TObject);
     procedure update_btnClick(Sender: TObject);
@@ -55,6 +72,9 @@ end;
 
 procedure TFEdit.add_btnClick(Sender: TObject);
 begin
+  // Refresh Queries
+  FDM.RefreshAllQueries(FDM);
+
   // Percabangan untuk CRUD siswa dan guru
   if role_edt.Text = 'guru' then
   begin
@@ -104,6 +124,8 @@ begin
       FDM.kls_zq.Post;
       kls_edt.Clear;
       wali_edt.Clear;
+
+      Application.MessageBox('Data berhasil ditambahkan ;)', 'Information', MB_OK);
     except
       on E: Exception do
         ShowMessage('Terjadi kesalahan saat menambahkan data: ' + E.Message);
@@ -115,6 +137,9 @@ end;
 
 procedure TFEdit.update_btnClick(Sender: TObject);
 begin
+  // Refresh Queries
+  FDM.RefreshAllQueries(FDM);
+
   if role_edt.Text = 'guru' then
   begin
     try
@@ -141,10 +166,6 @@ begin
   else if role_edt.Text = 'siswa' then
   begin
     try
-      // Ensure dataset is open
-      if not FDM.siswa_zq.Active then
-        FDM.siswa_zq.Open;
-
       // Locate data in the dataset
       if FDM.siswa_zq.Locate('nis', VarArrayOf([ni_edt.Text]), []) then
       begin
@@ -165,12 +186,37 @@ begin
         ShowMessage('Terjadi kesalahan saat mengupdate data: ' + E.Message);
     end;
   end
+  else if role_edt.Text = '' then
+  begin
+    // Percabangan untuk CRUD kelas
+    try
+      if FDM.kls_zq.Locate('nama_kelas', VarArrayOf([kls_edt.Text]), []) then
+      begin
+        FDM.kls_zq.Edit;
+        FDM.kls_zq.FieldByName('nama_kelas').AsString := kls_edt.Text;
+        FDM.kls_zq.FieldByName('id_guru').AsString := wali_edt.Text;
+        FDM.kls_zq.Post;
+        
+        Application.MessageBox('Data berhasil diupdate ;)', 'Information', MB_OK);
+      end
+      else
+      begin
+        Application.MessageBox('Data siswa tidak ditemukan.', 'Warning', MB_OK);
+      end;
+    except
+      on E: Exception do
+        ShowMessage('Terjadi kesalahan saat menambahkan data: ' + E.Message);
+    end;
+  end
   else
     ShowMessage('Role tidak dikenali! Harap isi dengan data yang sesuai :v');
 end;
 
 procedure TFEdit.delete_btnClick(Sender: TObject);
 begin
+  // Refresh Queries
+  FDM.RefreshAllQueries(FDM);
+
   if role_edt.Text = 'guru' then
   begin
     // Delete data to the dataset
@@ -181,6 +227,12 @@ begin
   begin
     // Delete data to the dataset
     FDM.siswa_zq.Delete;
+    Application.MessageBox('Data berhasil dihapus ;)', 'Information', MB_OK);
+  end
+  else if role_edt.Text = '' then
+  begin
+    if FDM.kls_zq.Locate('nama_kelas', VarArrayOf([kls_edt.Text]), []) then
+    FDM.kls_zq.Delete;
     Application.MessageBox('Data berhasil dihapus ;)', 'Information', MB_OK);
   end
   else

@@ -2,7 +2,7 @@ object FEdit: TFEdit
   Left = 430
   Top = 235
   Width = 1060
-  Height = 410
+  Height = 668
   Caption = 'Portal Admin (Edit Menu)'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -55,12 +55,12 @@ object FEdit: TFEdit
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object crud_SG_lbl: TLabel
-    Left = 208
-    Top = 50
-    Width = 206
+  object crud_JDWL_lbl: TLabel
+    Left = 443
+    Top = 263
+    Width = 157
     Height = 25
-    Caption = 'CRUD SISWA/GURU'
+    Caption = 'CRUD JADWAL'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -21
@@ -120,6 +120,123 @@ object FEdit: TFEdit
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object hari_lbl: TLabel
+    Left = 143
+    Top = 321
+    Width = 50
+    Height = 20
+    Caption = 'HARI:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object mulai_lbl: TLabel
+    Left = 143
+    Top = 354
+    Width = 138
+    Height = 20
+    Caption = 'JADWAL MULAI:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object selesai_lbl: TLabel
+    Left = 143
+    Top = 418
+    Width = 63
+    Height = 20
+    Caption = 'KELAS:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object id_kls_lbl: TLabel
+    Left = 143
+    Top = 386
+    Width = 159
+    Height = 20
+    Caption = 'JADWAL SELESAI:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object id_mapel_lbl: TLabel
+    Left = 564
+    Top = 321
+    Width = 162
+    Height = 20
+    Caption = 'MATA PELAJARAN:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object id_guru_lbl: TLabel
+    Left = 564
+    Top = 354
+    Width = 156
+    Height = 20
+    Caption = 'NAMA PENGAJAR:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object id_ruang_lbl: TLabel
+    Left = 564
+    Top = 418
+    Width = 117
+    Height = 20
+    Caption = 'TAHUN AJAR:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object id_tahun_lbl: TLabel
+    Left = 564
+    Top = 386
+    Width = 132
+    Height = 20
+    Caption = 'RUANG KELAS:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object crud_SG_lbl: TLabel
+    Left = 216
+    Top = 50
+    Width = 191
+    Height = 25
+    Caption = 'CRUD SIWA/GURU'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object nama_edt: TEdit
     Left = 306
     Top = 104
@@ -160,8 +277,8 @@ object FEdit: TFEdit
     TabOrder = 2
   end
   object add_btn: TBitBtn
-    Left = 278
-    Top = 282
+    Left = 244
+    Top = 538
     Width = 125
     Height = 40
     Caption = 'DAFTAR'
@@ -175,8 +292,8 @@ object FEdit: TFEdit
     OnClick = add_btnClick
   end
   object cancel_btn: TBitBtn
-    Left = 710
-    Top = 282
+    Left = 676
+    Top = 538
     Width = 125
     Height = 40
     Caption = 'BATAL'
@@ -190,8 +307,8 @@ object FEdit: TFEdit
     OnClick = cancel_btnClick
   end
   object update_btn: TBitBtn
-    Left = 422
-    Top = 282
+    Left = 388
+    Top = 538
     Width = 125
     Height = 40
     Caption = 'UPDATE'
@@ -205,8 +322,8 @@ object FEdit: TFEdit
     OnClick = update_btnClick
   end
   object delete_btn: TBitBtn
-    Left = 566
-    Top = 282
+    Left = 532
+    Top = 538
     Width = 125
     Height = 40
     Caption = 'HAPUS'
@@ -257,5 +374,109 @@ object FEdit: TFEdit
     Font.Style = []
     ParentFont = False
     TabOrder = 9
+  end
+  object hari_edt: TEdit
+    Left = 306
+    Top = 320
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 10
+  end
+  object mulai_edt: TEdit
+    Left = 306
+    Top = 352
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 11
+  end
+  object selesai_edt: TEdit
+    Left = 306
+    Top = 384
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 12
+  end
+  object int_mapel_edt: TEdit
+    Left = 727
+    Top = 320
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 13
+  end
+  object int_tahun_edt: TEdit
+    Left = 727
+    Top = 416
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 14
+  end
+  object int_ruang_edt: TEdit
+    Left = 727
+    Top = 384
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 15
+  end
+  object int_guru_edt: TEdit
+    Left = 727
+    Top = 352
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 16
+  end
+  object int_kls_edt: TEdit
+    Left = 306
+    Top = 416
+    Width = 175
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 17
   end
 end

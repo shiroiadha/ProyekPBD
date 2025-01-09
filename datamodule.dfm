@@ -34,13 +34,17 @@ object FDM: TFDM
       '    guru.id_guru = :id_guru;')
     Params = <
       item
+        DataType = ftUnknown
         Name = 'id_guru'
+        ParamType = ptUnknown
       end>
     Left = 40
     Top = 16
     ParamData = <
       item
+        DataType = ftUnknown
         Name = 'id_guru'
+        ParamType = ptUnknown
       end>
   end
   object jadwalS_ds: TDataSource
@@ -75,13 +79,17 @@ object FDM: TFDM
       '    siswa.id_siswa = :id_siswa;')
     Params = <
       item
+        DataType = ftUnknown
         Name = 'id_siswa'
+        ParamType = ptUnknown
       end>
     Left = 104
     Top = 16
     ParamData = <
       item
+        DataType = ftUnknown
         Name = 'id_siswa'
+        ParamType = ptUnknown
       end>
   end
   object siswa_ds: TDataSource
@@ -123,6 +131,19 @@ object FDM: TFDM
     Params = <>
     Left = 296
     Top = 16
+    object intgrfld_zqid_kelas: TIntegerField
+      FieldName = 'id_kelas'
+      Required = True
+    end
+    object strngfld_zqnama_kelas: TStringField
+      FieldName = 'nama_kelas'
+      Required = True
+      Size = 50
+    end
+    object intgrfld_zqid_guru: TIntegerField
+      FieldName = 'id_guru'
+      Required = True
+    end
   end
   object akun_ds: TDataSource
     DataSet = akun_zq

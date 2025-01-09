@@ -116,18 +116,17 @@ object FLogin: TFLogin
   end
   object con1: TZConnection
     ControlsCodePage = cGET_ACP
+    AutoEncodeStrings = True
     Properties.Strings = (
       'RawStringEncoding=DB_CP'
       'AutoEncodeStrings=True'
       'controls_cp=GET_ACP')
-    Connected = True
-    DisableSavepoints = False
     HostName = 'localhost'
     Port = 3306
     Database = 'jadwalngajar'
     User = 'root'
     Protocol = 'mysql'
-    LibraryLocation = 'D:\DATA FOLDER\Delphi Project\ProyekPt2\tubes\libmysql.dll'
+    LibraryLocation = 'D:\ProyekPt2\tubes\libmysql.dll'
     Left = 200
     Top = 8
   end
