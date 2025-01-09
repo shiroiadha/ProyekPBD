@@ -3,7 +3,8 @@ unit datamodule;
 interface
 
 uses
-  SysUtils, Classes, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset;
+  SysUtils, Classes, DB, ZAbstractRODataset, ZAbstractDataset, ZDataset,
+  mxExport, SMDBFltr, SMDBFind;
 
 type
   TFDM = class(TDataModule)
@@ -26,6 +27,38 @@ type
     intgrfld_zqid_kelas: TIntegerField;
     strngfld_zqnama_kelas: TStringField;
     intgrfld_zqid_guru: TIntegerField;
+    mapel_ds: TDataSource;
+    mapel_zq: TZQuery;
+    tahun_ds: TDataSource;
+    tahun_zq: TZQuery;
+    ruang_ds: TDataSource;
+    ruang_zq: TZQuery;
+    guru_smdbfn: TSMDBFindDialog;
+    guru_smdbft: TSMDBFilterDialog;
+    guru_mxdbg: TmxDBGridExport;
+    siswa_smdbfn: TSMDBFindDialog;
+    siswa_smdbft: TSMDBFilterDialog;
+    siswa_mxdbg: TmxDBGridExport;
+    kls_smdbfn: TSMDBFindDialog;
+    kls_smdbft: TSMDBFilterDialog;
+    kls_mxdbg: TmxDBGridExport;
+    akun_smdbfn: TSMDBFindDialog;
+    akun_smdbft: TSMDBFilterDialog;
+    akun_mxdbg: TmxDBGridExport;
+    mapel_smdbfn: TSMDBFindDialog;
+    mapel_smdbft: TSMDBFilterDialog;
+    mapel_mxdbg: TmxDBGridExport;
+    tahun_smdbfn: TSMDBFindDialog;
+    tahun_smdbft: TSMDBFilterDialog;
+    tahun_mxdbg: TmxDBGridExport;
+    ruang_smdbfn: TSMDBFindDialog;
+    ruang_smdbft: TSMDBFilterDialog;
+    ruang_mxdbg: TmxDBGridExport;
+    jdwl_ds: TDataSource;
+    jdwl_zq: TZQuery;
+    jdwl_smdbfn: TSMDBFindDialog;
+    jdwl_smdbft: TSMDBFilterDialog;
+    jdwl_mxdbg: TmxDBGridExport;
   private
     { Private declarations }
   public
@@ -41,7 +74,7 @@ implementation
 
 {$R *.dfm}
 
-uses laman_login;
+uses laman_login, laman_database;
 
 procedure TFDM.RefreshAllQueries(DataModule: TDataModule);
 var
@@ -68,7 +101,11 @@ begin
   guru_zq.Active := b;
   siswa_zq.Active := b;
   kls_zq.Active := b;
+  mapel_zq.Active := b;
+  tahun_zq.Active := b;
+  ruang_zq.Active := b;
   akun_zq.Active := b;
+  jdwl_zq.Active := b;
 end;
 
 end.

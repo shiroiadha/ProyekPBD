@@ -17,7 +17,7 @@ object FAdmin: TFAdmin
   object welcome_lbl: TLabel
     Left = 46
     Top = 38
-    Width = 485
+    Width = 489
     Height = 37
     Caption = 'SELAMAT DATANG ADMIN {id}'
     Font.Charset = DEFAULT_CHARSET

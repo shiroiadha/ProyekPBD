@@ -8,7 +8,8 @@ uses
   laman_guru in 'laman_guru.pas' {FGuru},
   laman_admin in 'laman_admin.pas' {FAdmin},
   laman_edit in 'laman_edit.pas' {FEdit},
-  datamodule in 'datamodule.pas' {FDM: TDataModule};
+  datamodule in 'datamodule.pas' {FDM: TDataModule},
+  laman_database in 'laman_database.pas' {FDatabases};
 
 {$R *.res}
 
@@ -21,5 +22,6 @@ begin
   Application.CreateForm(TFAdmin, FAdmin);
   Application.CreateForm(TFEdit, FEdit);
   Application.CreateForm(TFDM, FDM);
+  Application.CreateForm(TFDatabases, FDatabases);
   Application.Run;
 end.

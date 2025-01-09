@@ -277,7 +277,7 @@ object FEdit: TFEdit
     TabOrder = 2
   end
   object add_btn: TBitBtn
-    Left = 244
+    Left = 171
     Top = 538
     Width = 125
     Height = 40
@@ -292,7 +292,7 @@ object FEdit: TFEdit
     OnClick = add_btnClick
   end
   object cancel_btn: TBitBtn
-    Left = 676
+    Left = 747
     Top = 538
     Width = 125
     Height = 40
@@ -307,7 +307,7 @@ object FEdit: TFEdit
     OnClick = cancel_btnClick
   end
   object update_btn: TBitBtn
-    Left = 388
+    Left = 315
     Top = 538
     Width = 125
     Height = 40
@@ -322,7 +322,7 @@ object FEdit: TFEdit
     OnClick = update_btnClick
   end
   object delete_btn: TBitBtn
-    Left = 532
+    Left = 459
     Top = 538
     Width = 125
     Height = 40
@@ -478,5 +478,20 @@ object FEdit: TFEdit
     Font.Style = []
     ParentFont = False
     TabOrder = 17
+  end
+  object view_btn: TBitBtn
+    Left = 602
+    Top = 537
+    Width = 125
+    Height = 40
+    Caption = 'VIEW'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 18
+    OnClick = view_btnClick
   end
 end

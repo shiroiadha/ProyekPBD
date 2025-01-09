@@ -44,12 +44,14 @@ type
     crud_SG_lbl: TLabel;
     int_guru_edt: TEdit;
     int_kls_edt: TEdit;
+    view_btn: TBitBtn;
     procedure cancel_btnClick(Sender: TObject);
     procedure add_btnClick(Sender: TObject);
     procedure update_btnClick(Sender: TObject);
     procedure delete_btnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure view_btnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -63,7 +65,7 @@ implementation
 
 {$R *.dfm}
 
-uses laman_guru, laman_siswa, datamodule, laman_login;
+uses laman_guru, laman_siswa, datamodule, laman_login, laman_database;
 
 procedure TFEdit.cancel_btnClick(Sender: TObject);
 begin
@@ -114,7 +116,7 @@ begin
         ShowMessage('Terjadi kesalahan saat menambahkan data: ' + E.Message);
     end;
   end
-  else if role_edt.Text = '' then
+  else if kls_edt.Text <> '' then
   begin
     // Percabangan untuk CRUD kelas
     try
@@ -131,8 +133,35 @@ begin
         ShowMessage('Terjadi kesalahan saat menambahkan data: ' + E.Message);
     end;
   end
+  else if hari_edt.Text <> '' then
+  begin
+    try
+      FDM.jdwl_zq.Append;
+      FDM.jdwl_zq.FieldByName('hari').AsString := hari_edt.Text;
+      FDM.jdwl_zq.FieldByName('jam_mulai').AsDateTime := StrToTime(mulai_edt.Text);
+      FDM.jdwl_zq.FieldByName('jam_selesai').AsDateTime := StrToTime(selesai_edt.Text);
+      FDM.jdwl_zq.FieldByName('id_kelas').AsInteger := StrToInt(int_kls_edt.Text);
+      FDM.jdwl_zq.FieldByName('id_mapel').AsInteger := StrToInt(int_mapel_edt.Text);
+      FDM.jdwl_zq.FieldByName('id_guru').AsInteger := StrToInt(int_guru_edt.Text);
+      FDM.jdwl_zq.FieldByName('id_ruang').AsInteger := StrToInt(int_ruang_edt.Text);
+      FDM.jdwl_zq.FieldByName('id_tahun').AsInteger := StrToInt(int_tahun_edt.Text);
+      FDM.jdwl_zq.Post;
+      hari_edt.Clear;
+      mulai_edt.Clear;
+      selesai_edt.Clear;
+      int_kls_edt.Clear;
+      int_guru_edt.Clear;
+      int_ruang_edt.Clear;
+      int_tahun_edt.Clear;
+
+      Application.MessageBox('Data berhasil ditambahkan ;)', 'Information', MB_OK);
+    except
+      on E: Exception do
+        ShowMessage('Terjadi kesalahan saat menambahkan data: ' + E.Message);
+    end;
+  end
   else
-    ShowMessage('Role tidak dikenali! Harap isi dengan data yang sesuai :v');
+    ShowMessage('Data kosong! Harap isi dengan data yang sesuai :v');
 end;
 
 procedure TFEdit.update_btnClick(Sender: TObject);
@@ -186,7 +215,7 @@ begin
         ShowMessage('Terjadi kesalahan saat mengupdate data: ' + E.Message);
     end;
   end
-  else if role_edt.Text = '' then
+  else if kls_edt.Text <> '' then
   begin
     // Percabangan untuk CRUD kelas
     try
@@ -208,8 +237,31 @@ begin
         ShowMessage('Terjadi kesalahan saat menambahkan data: ' + E.Message);
     end;
   end
+  else if hari_edt.Text <> '' then
+  begin
+    try
+      if FDM.jdwl_zq.Locate('hari;jam_mulai;jam_selesai', VarArrayOf([hari_edt.Text, mulai_edt.Text, selesai_edt.Text]), []) then
+      begin
+        FDM.jdwl_zq.Edit;
+        FDM.jdwl_zq.FieldByName('hari').AsString := hari_edt.Text;
+        FDM.jdwl_zq.FieldByName('jam_mulai').AsDateTime := StrToTime(mulai_edt.Text);
+        FDM.jdwl_zq.FieldByName('jam_selesai').AsDateTime := StrToTime(selesai_edt.Text);
+        FDM.jdwl_zq.FieldByName('id_kelas').AsInteger := StrToInt(int_kls_edt.Text);
+        FDM.jdwl_zq.FieldByName('id_mapel').AsInteger := StrToInt(int_mapel_edt.Text);
+        FDM.jdwl_zq.FieldByName('id_guru').AsInteger := StrToInt(int_guru_edt.Text);
+        FDM.jdwl_zq.FieldByName('id_ruang').AsInteger := StrToInt(int_ruang_edt.Text);
+        FDM.jdwl_zq.FieldByName('id_tahun').AsInteger := StrToInt(int_tahun_edt.Text);
+        FDM.jdwl_zq.Post;
+      end;
+
+      Application.MessageBox('Data berhasil ditambahkan ;)', 'Information', MB_OK);
+    except
+      on E: Exception do
+        ShowMessage('Terjadi kesalahan saat menambahkan data: ' + E.Message);
+    end;
+  end
   else
-    ShowMessage('Role tidak dikenali! Harap isi dengan data yang sesuai :v');
+    ShowMessage('Data kosong! Harap isi dengan data yang sesuai :v');
 end;
 
 procedure TFEdit.delete_btnClick(Sender: TObject);
@@ -235,8 +287,14 @@ begin
     FDM.kls_zq.Delete;
     Application.MessageBox('Data berhasil dihapus ;)', 'Information', MB_OK);
   end
+  else if hari_edt.Text <> '' then
+  begin
+    if FDM.jdwl_zq.Locate('hari;jam_mulai;jam_selesai', VarArrayOf([hari_edt.Text, mulai_edt.Text, selesai_edt.Text]), []) then
+    FDM.jdwl_zq.Delete;
+    Application.MessageBox('Data berhasil dihapus ;)', 'Information', MB_OK);
+  end
   else
-    ShowMessage('Role tidak dikenali! Harap isi dengan data yang sesuai :v');
+    ShowMessage('Data kosong! Harap isi dengan data yang sesuai :v');
 end;
 
 procedure TFEdit.FormShow(Sender: TObject);
@@ -247,6 +305,11 @@ end;
 procedure TFEdit.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FDM.ActiveTable(False);
+end;
+
+procedure TFEdit.view_btnClick(Sender: TObject);
+begin
+  FDatabases.Show;
 end;
 
 end.

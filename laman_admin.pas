@@ -28,7 +28,7 @@ implementation
 
 {$R *.dfm}
 
-uses laman_login, laman_siswa, laman_guru, laman_edit;
+uses laman_login, laman_siswa, laman_guru, laman_edit, laman_database;
 
 procedure TFAdmin.logout_btnClick(Sender: TObject);
 begin
@@ -37,8 +37,7 @@ end;
 
 procedure TFAdmin.view_btnClick(Sender: TObject);
 begin
-  FSiswa.Show;
-  FGuru.Show;
+  FDatabases.Show;
 end;
 
 procedure TFAdmin.edt_btnClick(Sender: TObject);
